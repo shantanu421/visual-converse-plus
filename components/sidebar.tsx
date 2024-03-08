@@ -25,6 +25,12 @@ const routes = [
     color: "text-violet-500",
   },
   {
+    label: 'Music Generation',
+    icon: Music,
+    color: "text-emerald-500",
+    href: '/music',
+  },
+  {
     label: 'Image Generation',
     icon: ImageIcon,
     color: "text-pink-700",
@@ -35,12 +41,6 @@ const routes = [
     icon: VideoIcon,
     color: "text-orange-700",
     href: '/video',
-  },
-  {
-    label: 'Music Generation',
-    icon: Music,
-    color: "text-emerald-500",
-    href: '/music',
   },
   {
     label: 'Code Generation',
@@ -72,7 +72,7 @@ export const Sidebar = ({
             <Image fill alt="Logo" src="/logo.png" />
           </div>
           <h1 className={cn("text-2xl font-bold", poppins.className)}>
-            Genius
+            VC Plus
           </h1>
         </Link>
         <div className="space-y-1">
