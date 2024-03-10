@@ -4,27 +4,27 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const testimonials = [
   {
-    name: "Joel",
-    avatar: "J",
-    title: "Software Engineer",
-    description: "This is the best application I've ever used!",
+    name: "Priti",
+    avatar: "P",
+    title: "Developer",
+    description: " VCP Makes My Everyday Professional Life Easy!",
   },
   {
-    name: "Antonio",
+    name: "Shantanu",
+    avatar: "S",
+    title: "Developer",
+    description: "I Use This Daily For Generating Complex Codes!",
+  },
+  {
+    name: "Pratik",
+    avatar: "P",
+    title: "Developer",
+    description: "Perfect Alternative For ReplicateAI",
+  },
+  {
+    name: "Ajit",
     avatar: "A",
-    title: "Designer",
-    description: "I use this daily for generating new photos!",
-  },
-  {
-    name: "Mark",
-    avatar: "M",
-    title: "CEO",
-    description: "This app has changed my life, cannot imagine working without it!",
-  },
-  {
-    name: "Mary",
-    avatar: "M",
-    title: "CFO",
+    title: "Developer",
     description: "The best in class, definitely worth the premium subscription!",
   },
 ];
