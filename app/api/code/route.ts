@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { ChatCompletionRequestMessage, Configuration, OpenAIApi } from "openai";
 
 import { checkSubscription } from "@/lib/subscription";
-import { increaseApiLimit, checkApiLimit } from "@/lib/api-limit";
+import { incrementApiLimit, checkApiLimit } from "@/lib/api-limit";
 
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
@@ -49,7 +49,7 @@ export async function POST(
     });
 
     if (!isPro) {
-      await increaseApiLimit();
+      await incrementApiLimit();
     }
 
     return NextResponse.json(response.data.choices[0].message);

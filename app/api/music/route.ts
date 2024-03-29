@@ -2,7 +2,7 @@ import Replicate from "replicate";
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
-import { increaseApiLimit, checkApiLimit } from "@/lib/api-limit";
+import { incrementApiLimit, checkApiLimit } from "@/lib/api-limit";
 import { checkSubscription } from "@/lib/subscription";
 
 const replicate = new Replicate({
@@ -42,7 +42,7 @@ export async function POST(
     );
 
     if (!isPro) {
-      await increaseApiLimit();
+      await incrementApiLimit();
     }
 
     return NextResponse.json(response);

@@ -86,7 +86,7 @@ const VideoPage = () => {
                     <Input
                       className="border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent"
                       disabled={isLoading} 
-                      placeholder="Clown fish swimming in a coral reef" 
+                      placeholder="Enter text input..." 
                       {...field}
                     />
                   </FormControl>
