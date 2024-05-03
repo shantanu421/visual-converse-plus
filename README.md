@@ -1,4 +1,4 @@
-# AI-SaaS - AI-Powered Software-as-a-Service Application
+# Visual Converse Plus
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![License](https://img.shields.io/badge/React.js-v18.2.0-blue.svg)](https://opensource.org/licenses/MIT)
@@ -9,7 +9,7 @@
 [![Prisma](https://img.shields.io/badge/Prisma-v5.0.0-lightgrey.svg)](https://prisma.io/)
 [![Stripe](https://img.shields.io/badge/Stripe-API%20v12.16.0-green.svg)](https://stripe.com/)
 
-AI-SaaS is an advanced and adaptable Software-as-a-Service (SaaS) application that harnesses the capabilities of cutting-edge technologies, including Next.js, OpenAI, Replicate, Tailwind CSS, Prisma, and Stripe. The primary goal of this application is to empower users by offering AI-powered services that facilitate easy access and utilization of artificial intelligence in their projects and workflows.
+VC Plus is an advanced and adaptable Software-as-a-Service (SaaS) application that harnesses the capabilities of cutting-edge technologies, including Next.js, OpenAI, Replicate, Tailwind CSS, Prisma, and Stripe. The primary goal of this application is to empower users by offering AI-powered services that facilitate easy access and utilization of artificial intelligence in their projects and workflows.
 
 ## Features
 
