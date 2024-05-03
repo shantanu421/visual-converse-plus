@@ -9,7 +9,7 @@
 [![Prisma](https://img.shields.io/badge/Prisma-v5.0.0-lightgrey.svg)](https://prisma.io/)
 [![Stripe](https://img.shields.io/badge/Stripe-API%20v12.16.0-green.svg)](https://stripe.com/)
 
-VC Plus is an advanced and adaptable Software-as-a-Service (SaaS) application that harnesses the capabilities of cutting-edge technologies, including Next.js, OpenAI, Replicate, Tailwind CSS, Prisma, and Stripe. The primary goal of this application is to empower users by offering AI-powered services that facilitate easy access and utilization of artificial intelligence in their projects and workflows.
+Our SaaS AI Platform is a cutting-edge solution built on Next.js 13, React, Tailwind, and Prisma, offering a range of AI-powered services. Leveraging the Conversation AI, Code Generation AI, and Image Generation AI APIs from OpenAI, along with Music and Video Generation AI from Replicate AI, our platform provides users with powerful tools for generating content, code, and media. 
 
 ## Features
 
