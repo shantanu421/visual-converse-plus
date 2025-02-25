@@ -31,7 +31,6 @@ VC Plus as SaaS AI Platform is a cutting-edge solution built on Next.js 13, Reac
 <img width="1470" alt="Screenshot 2023-07-30 at 11 33 59 AM" src="https://github.com/shantanu421/visual-converse-plus/assets/149368485/a0b07a7b-cbb4-42f2-bbdc-446962cddebc">
 <img width="1470" alt="Screenshot 2023-07-30 at 11 40 43 AM" src="https://github.com/shantanu421/visual-converse-plus/assets/149368485/4bb36d95-3bac-481d-9e29-b5121be9c968">
 <img width="1470" alt="Screenshot 2023-07-30 at 11 41 18 AM" src="https://github.com/shantanu421/visual-converse-plus/assets/149368485/f19b4dfe-34f9-422d-aa58-7492e38aee04">
-<img width="1470" alt="Screenshot 2023-07-30 at 11 41 53 AM" src="https://github.com/shantanu421/visual-converse-plus/assets/149368485/b4a185b8-7974-4b1b-a250-130cebeb2744">
 <img width="1470" alt="Screenshot 2023-07-30 at 11 42 23 AM" src="https://github.com/shantanu421/visual-converse-plus/assets/149368485/34ae1aa9-1954-40c3-bec2-02e042610423">
 
 ## Getting Started
