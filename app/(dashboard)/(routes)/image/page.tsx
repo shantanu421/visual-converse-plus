@@ -1,12 +1,12 @@
 "use client";
 
+import { useState } from "react";
 import * as z from "zod";
 import axios from "axios";
 import Image from "next/image";
-import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Download, ImageIcon } from "lucide-react";
-import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
@@ -19,7 +19,6 @@ import { Loader } from "@/components/loader";
 import { Empty } from "@/components/ui/empty";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useProModal } from "@/hooks/use-pro-modal";
-
 import { amountOptions, formSchema, resolutionOptions } from "./constants";
 
 const PhotoPage = () => {
@@ -41,11 +40,8 @@ const PhotoPage = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       setPhotos([]);
-
-      const response = await axios.post('/api/image', values);
-
-      const urls = response.data.map((image: { url: string }) => image.url);
-
+      const response = await axios.post("/api/image", values);
+      const urls = response.data.map((image: { image: string }) => image.image);
       setPhotos(urls);
     } catch (error: any) {
       if (error?.response?.status === 403) {
@@ -56,9 +52,9 @@ const PhotoPage = () => {
     } finally {
       router.refresh();
     }
-  }
+  };
 
-  return ( 
+  return (
     <div>
       <Heading
         title="Image Generation"
@@ -193,7 +189,7 @@ const PhotoPage = () => {
         </div>
       </div>
     </div>
-   );
-}
- 
+  );
+};
+
 export default PhotoPage;

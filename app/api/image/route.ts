@@ -1,19 +1,15 @@
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
-import { Configuration, OpenAIApi } from "openai";
+import axios from "axios";
 
 import { checkSubscription } from "@/lib/subscription";
 import { incrementApiLimit, checkApiLimit } from "@/lib/api-limit";
 
-const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+const HUGGINGFACE_API_URL = "https://api-inference.huggingface.co/models/runwayml/stable-diffusion-v1-5";
 
-const openai = new OpenAIApi(configuration);
+const HUGGINGFACE_API_KEY = process.env.HUGGINGFACE_API_KEY;
 
-export async function POST(
-  req: Request
-) {
+export async function POST(req: Request) {
   try {
     const { userId } = auth();
     const body = await req.json();
@@ -23,8 +19,8 @@ export async function POST(
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    if (!configuration.apiKey) {
-      return new NextResponse("OpenAI API Key not configured.", { status: 500 });
+    if (!HUGGINGFACE_API_KEY) {
+      return new NextResponse("Hugging Face API Key not configured.", { status: 500 });
     }
 
     if (!prompt) {
@@ -46,19 +42,32 @@ export async function POST(
       return new NextResponse("Free trial has expired. Please upgrade to pro.", { status: 403 });
     }
 
-    const response = await openai.createImage({
-      prompt,
-      n: parseInt(amount, 10),
-      size: resolution,
-    });
+    const images = [];
+    for (let i = 0; i < parseInt(amount, 10); i++) {
+      const response = await axios.post(
+        HUGGINGFACE_API_URL,
+        { inputs: prompt },
+        {
+          headers: {
+            Authorization: `Bearer ${HUGGINGFACE_API_KEY}`,
+            "Content-Type": "application/json",
+          },
+          responseType: "arraybuffer",
+        }
+      );
+      
+      const imageUrl = `data:image/png;base64,${Buffer.from(response.data).toString("base64")}`;
+      images.push({ image: imageUrl });
+    }
 
     if (!isPro) {
       await incrementApiLimit();
     }
 
-    return NextResponse.json(response.data.data);
-  } catch (error) {
-    console.log('[IMAGE_ERROR]', error);
+    return NextResponse.json(images);
+  } catch (error: any) {
+    console.error("[IMAGE_ERROR]", error.response?.data ? Buffer.from(error.response.data).toString() : error.message);
+
     return new NextResponse("Internal Error", { status: 500 });
   }
-};
+}
