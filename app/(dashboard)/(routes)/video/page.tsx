@@ -1,12 +1,11 @@
 "use client";
-
-import * as z from "zod";
-import axios from "axios";
 import { useState } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
 import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-hot-toast";
-import { FileAudio } from "lucide-react";
+import { FileVideo } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 import { Heading } from "@/components/heading";
@@ -17,66 +16,74 @@ import { Loader } from "@/components/loader";
 import { Empty } from "@/components/ui/empty";
 import { useProModal } from "@/hooks/use-pro-modal";
 
-import { formSchema } from "./constants";
+const formSchema = z.object({
+  prompt: z.string().min(5, "Prompt text is required"),
+});
 
 const VideoPage = () => {
-  const router = useRouter();
   const proModal = useProModal();
-  const [video, setVideo] = useState<string>();
+  const router = useRouter();
+  const [videoUrl, setVideoUrl] = useState<string | null>(null);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       prompt: "",
-    }
+    },
   });
 
   const isLoading = form.formState.isSubmitting;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      setVideo(undefined);
+      setVideoUrl(null);
 
-      const response = await axios.post('/api/video', values);
+      const response = await axios.post(
+        "/api/video",
+        { prompt: values.prompt, dimension: "16:9" },
+        { responseType: "blob" } // Ensure we get a binary response
+      );
 
-      setVideo(response.data[0]);
-      form.reset();
+
+      if (!response.data || response.data.size === 0) {
+        throw new Error("Received empty or invalid video data.");
+      }
+
+      // Check if the response is a valid video
+      if (!response.headers["content-type"]?.includes("video/mp4")) {
+        throw new Error("API returned non-video content. Check API response.");
+      }
+
+      // Convert Blob to URL
+      const blob = new Blob([response.data], { type: "video/mp4" });
+      const url = URL.createObjectURL(blob);
+
+      setVideoUrl(url);
     } catch (error: any) {
       if (error?.response?.status === 403) {
         proModal.onOpen();
-      } else {
-        toast.error("Something went wrong.");
       }
+      console.error("API Error:", error.message);
+      toast.error("Something went wrong.");
     } finally {
       router.refresh();
     }
-  }
+  };
 
-  return ( 
+  return (
     <div>
       <Heading
-        title="Video Generation"
-        description="Turn your prompt into video."
-        icon={FileAudio}
+        title="AI Video Generator"
+        description="Create videos using AI with Segmind."
+        icon={FileVideo}
         iconColor="text-orange-700"
         bgColor="bg-orange-700/10"
       />
       <div className="px-4 lg:px-8">
         <Form {...form}>
-          <form 
-            onSubmit={form.handleSubmit(onSubmit)} 
-            className="
-              rounded-lg 
-              border 
-              w-full 
-              p-4 
-              px-3 
-              md:px-6 
-              focus-within:shadow-sm
-              grid
-              grid-cols-12
-              gap-2
-            "
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="rounded-lg border w-full p-4 px-3 md:px-6 focus-within:shadow-sm grid grid-cols-12 gap-2"
           >
             <FormField
               name="prompt"
@@ -85,35 +92,44 @@ const VideoPage = () => {
                   <FormControl className="m-0 p-0">
                     <Input
                       className="border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent"
-                      disabled={isLoading} 
-                      placeholder="Enter text input..." 
+                      disabled={isLoading}
+                      placeholder="Enter text prompt..."
                       {...field}
                     />
                   </FormControl>
                 </FormItem>
               )}
             />
-            <Button className="col-span-12 lg:col-span-2 w-full" type="submit" disabled={isLoading} size="icon">
+            <Button
+              className="col-span-12 lg:col-span-2 w-full"
+              type="submit"
+              disabled={isLoading}
+            >
               Generate
             </Button>
           </form>
         </Form>
+
         {isLoading && (
           <div className="p-20">
             <Loader />
           </div>
         )}
-        {!video && !isLoading && (
-          <Empty label="No video files generated." />
-        )}
-        {video && (
-          <video controls className="w-full aspect-video mt-8 rounded-lg border bg-black">
-            <source src={video} />
+
+        {!videoUrl && !isLoading && <Empty label="No video generated yet." />}
+
+        {videoUrl && (
+          <video
+            controls
+            className="w-full aspect-video mt-8 rounded-lg border bg-black"
+          >
+            <source src={videoUrl} type="video/mp4" />
+            Your browser does not support the video tag.
           </video>
         )}
       </div>
     </div>
-   );
-}
- 
+  );
+};
+
 export default VideoPage;
