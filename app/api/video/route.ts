@@ -37,6 +37,7 @@ export async function POST(req: Request) {
         "x-api-key": SEGMIND_API_KEY,
         "Content-Type": "application/json",
         "Accept": "video/mp4",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
       },
       body: JSON.stringify({ prompt }),
     });
