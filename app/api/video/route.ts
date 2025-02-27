@@ -36,6 +36,7 @@ export async function POST(req: Request) {
       headers: {
         "x-api-key": SEGMIND_API_KEY,
         "Content-Type": "application/json",
+        "Accept": "video/mp4",
       },
       body: JSON.stringify({ prompt }),
     });
